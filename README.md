@@ -7,3 +7,11 @@
 
 ## Running
 1. Build and running `go run parking.go` or directly `go build` from project directory
+
+## keys
+1. Create car slot `create <number of slot>` `-> create 5`
+2. Add car to park slot `park <Car ID> <Car Color>` `-> park B12345VB white`
+3. Car leave or remove car from slot `leave <slot number>` `-> leave 2`
+4. Show slot list `status` `-> status`
+5. Find cars by ID `find id <Car ID>` `-> find id B12345VB`
+6. Find cars by Color `find color <Car Color>` `-> find color white`

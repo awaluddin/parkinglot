@@ -8,13 +8,24 @@ import (
 	"strings"
 )
 
+type CarSlot struct {
+	Slot  string
+	CarId string
+	Color string
+}
+
+const (
+	CAR_COLOR = "color"
+	CAR_ID    = "id"
+)
+
 func main() {
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Parking ")
+	fmt.Println("       Parking ")
 	fmt.Println("---------------------")
 
-	CarList := [][]string{}
+	CarList := []CarSlot{}
 
 	for {
 		fmt.Print("-> ")
@@ -28,11 +39,15 @@ func main() {
 				slot, _ := strconv.Atoi(keys[1])
 				for i := 1; i <= slot; i++ {
 					id := strconv.Itoa(i)
-					AddList := []string{id, "", ""}
+
+					AddList := CarSlot{
+						Slot:  id,
+						CarId: "",
+						Color: "",
+					}
 					CarList = append(CarList, AddList)
 				}
 			}
-			fmt.Println("parking car")
 			break
 		case "park":
 			CarNumber := keys[1]
@@ -40,28 +55,28 @@ func main() {
 
 			FreeSlot := 0
 			for k, v := range CarList {
-				if v[1] == "" {
+				if v.CarId == "" {
 					FreeSlot = k
 					break
 				}
 			}
-			CarList[FreeSlot][1] = CarNumber
-			CarList[FreeSlot][2] = CarColor
+			CarList[FreeSlot].CarId = CarNumber
+			CarList[FreeSlot].Color = CarColor
 
 			fmt.Println("parking car")
 			break
 		case "status":
 			fmt.Println("No 				Id							Color")
 			for _, v := range CarList {
-				fmt.Println(v[0] + " 			" + v[1] + "							" + v[2])
+				fmt.Println(v.Slot + " 			" + v.CarId + "							" + v.Color)
 			}
 			break
 		case "leave":
 			Id := keys[1]
 			for k, v := range CarList {
-				if v[0] == Id {
-					CarList[k][1] = ""
-					CarList[k][2] = ""
+				if v.Slot == Id {
+					CarList[k].CarId = ""
+					CarList[k].Color = ""
 					break
 				}
 			}
@@ -69,21 +84,23 @@ func main() {
 		case "find":
 			FindKey := keys[1]
 			FindValue := keys[2]
-			FindKeyIndex := 0
-
-			if FindKey == "id" {
-				FindKeyIndex = 1
-			} else {
-				FindKeyIndex = 2
-			}
 
 			fmt.Println("No 				Id							Color")
-			for _, v := range CarList {
-				if v[FindKeyIndex] == FindValue {
-					fmt.Println(v[0] + " 			" + v[1] + "							" + v[2])
-				}
 
+			if FindKey == CAR_ID {
+				for _, v := range CarList {
+					if v.CarId == FindValue {
+						fmt.Println(v.Slot + " 			" + v.CarId + "							" + v.Color)
+					}
+				}
+			} else {
+				for _, v := range CarList {
+					if v.Color == FindValue {
+						fmt.Println(v.Slot + " 			" + v.CarId + "							" + v.Color)
+					}
+				}
 			}
+
 			break
 		default:
 			fmt.Println("keyword not found")

@@ -6,7 +6,7 @@
 2. clone repository `git clone git@github.com:awaluddin/parkinglot.git somewhere`
 
 ## Running
-1. Build and running `go run parking.go` or directly `go build` from project directory
+1. Running `./parking_lot.go` 
 
 ## keys
 1. Create car slot `create <number of slot>` `-> create 5`
